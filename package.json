@@ -1,0 +1,32 @@
+{
+  "name": "api-red-social-cosina",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js",
+    "generate": "prisma generate",
+    "migrate": "prisma migrate dev --name init",
+    "clean": "prisma migrate reset",
+    "db-push": "prisma db push",
+    "seeds": "ts-node ./src/seeders/index.seeder.ts",
+    "db-seeders": "npm run generate && npm run db-push && npm run seeds"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "@prisma/client": "^5.20.0",
+    "body-parser": "^1.20.3",
+    "express": "^4.21.1",
+    "express-validator": "^7.2.0",
+    "jwt-simple": "^0.5.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7",
+    "prisma": "^5.20.0"
+  }
+}

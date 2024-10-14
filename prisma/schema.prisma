@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id Int @id @default(autoincrement())
+  password String @db.LongText
+  username String? @db.LongText
+  nombre String? @db.LongText
+  telefono String? @db.LongText
+  link_google String? @db.LongText
+  link_facebook String? @db.LongText
+  brithday DateTime?
+  pais String? @db.LongText
+  region String? @db.LongText
+  control_notificacion Boolean? @default(false)
+  email String @unique
+  uidPlayFabId String @db.LongText
+  mythar Float? @default(0)
+  verificar Int? @default(0)
+  token_verificacion String? @db.LongText
+  referido String? @db.LongText
+  preguntaSecreta String @db.LongText
+  respuestaSecreta String @db.LongText
+  dobleFactor Boolean? @default(false)
+  privacidad Boolean? @default(false)
+  created_at DateTime @default(now())
+  nivel Float? @default(1)
+  poder_minado Int? @default(0)
+  gemas Float? @default(0)
+  gemas_cambio Float? @default(0)
+  gemas_regalo Float? @default(0)
+  numero_apuesta Int? @default(0)
+  codigo_registro String? @db.LongText
+  @@map("usuario")
+}
