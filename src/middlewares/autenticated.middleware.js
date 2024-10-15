@@ -1,10 +1,13 @@
-import jwt from 'jwt-simple';
-import { BabRequestError } from '../errors/bad-request-error.js';
+import jwt from 'jwt-simple'
 import { NotAuthorizedError } from '../errors/not-authorized-error.js';
 const secret = 'examen_app';
 
 export const ensureAuth = (req, res, next) => {
-    const autho = req.get('Authorization');
+    const xToken = req.get('x-Authorization');
+    let autho = req.get('Authorization');
+    if (xToken || xToken != '') {
+        autho = xToken;
+    }
     if (!autho) {
         throw new NotAuthorizedError('La petición no tiene la cabecera de autenticación');
     }
