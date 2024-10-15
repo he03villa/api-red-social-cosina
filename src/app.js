@@ -44,6 +44,7 @@ const app = express();
 //cargar rutas
 import gemineRouter from './routers/gemine.route.js';
 import usuariosRouter from './routers/usuarios.route.js';
+import publicacionesRouter from './routers/publicaciones.route.js';
 
 //middlewares
 app.use(bodyParser.urlencoded({ extended:false, limit: '50mb' }));
@@ -62,6 +63,7 @@ app.use((req, res, next) => {
 //rutas
 app.use('/api/gemine', gemineRouter);
 app.use('/api/usuarios', usuariosRouter);
+app.use('/api/publicaciones', publicacionesRouter);
 
 // swagger
 app.get('/swagger.json', function (req, res) {

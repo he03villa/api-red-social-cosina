@@ -22,6 +22,15 @@ class UsuariosValidator {
         body("password").notEmpty().withMessage("El password del usuario es requerido")
     ];
 
+    updateUser = [
+        body("nombre").notEmpty().withMessage("El nombre del usuario es requerido"),
+        body("telefono").notEmpty().withMessage("El telefono del usuario es requerido")
+    ];
+
+    password = [
+        body("password").notEmpty().withMessage("El password es requerido")
+    ];
+
     existeUser = async (req, res, next) => {
         const { email } = req.body;
         const user = await userService.getUser(email);

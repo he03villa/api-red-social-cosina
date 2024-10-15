@@ -57,5 +57,39 @@ class UsuariosController {
             return res.status(500).send({ message: 'Error Interno' });
         }
     }
+
+    updateUser = async (req, res) => {
+        const { id } = req.params;
+        const { nombre, telefono } = req.body;
+        const data = { nombre, telefono, id }
+        try {
+            const user = await userService.updateUser(data);
+            if (user.code == 200) {
+                return res.status(200).send(user.data);
+            } else {
+                serializeErrors(res, user.code, user.data);
+            }
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send({ message: 'Error Interno' });
+        }
+    }
+
+    updatePassword = async (req, res) => {
+        const { id } = req.params;
+        const { password } = req.body;
+        const data = { password, id }
+        try {
+            const user = await userService.updatePassword(data);
+            if (user.code == 200) {
+                return res.status(200).send(user.data);
+            } else {
+                serializeErrors(res, user.code, user.data);
+            }
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send({ message: 'Error Interno' });
+        }
+    }
 }
-export default UsuariosController
+export default UsuariosController;

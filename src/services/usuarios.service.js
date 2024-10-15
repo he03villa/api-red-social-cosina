@@ -18,6 +18,7 @@ class UsuariosService extends Base {
                 username: option.username
             };
             const newUser = await this.prisma.usuarios.create({ data });
+            newUser.token = createToken(newUser);
             delete newUser.password;
             return { code: 201, data: newUser };
         } catch (ex) {
@@ -52,10 +53,52 @@ class UsuariosService extends Base {
                 user.token = createToken(user);
                 return { code: 200, data: user };
             } else {
-                return { code: 400, data: 'Contraseña incorrecta' };
+                return { code: 400, data: 'Contrase a incorrecta' };
             }
         } else {   
-            return { code: 400, data: 'No se encontro el usuario' };
+            return { code: 400, data: 'No se encontro  el usuario' };
+        }
+    }
+
+    updateUser = async (option) => {
+        try {
+            const id = parseInt(option.id);
+            delete option.id;
+            const newUser = await this.prisma.usuarios.update({
+                where: { id: id },
+                data: option
+            });
+            return { code: 200, data: { message: "Se actualizo el usuario" } };
+        } catch (error) {
+            return { code: 400, data: 'No se encontro  el usuario' };
+        }
+    }
+
+    updatePassword = async (option) => {
+        try {
+            const id = parseInt(option.id);
+            const user = await this.getUser(id);
+            const check = await new Promise((resolve, reject) => {
+                bcrypt.compare(option.password.toString(), user.password, async (err, check) => {
+                    if (err) reject(err);
+                    resolve(check);
+                });
+            });
+            if (check) return { code: 400, data: `La contraseña nueva es igual a la vieja` };
+            const hash = await new Promise((resolve, reject) => {
+                bcrypt.hash(option.password, null, null, (err, hash) => {
+                    if (err) reject(err);
+                    resolve(hash);
+                });
+            });
+            const data = {
+                password: hash,
+                id: id
+            }
+            const result = await this.updateUser(data);
+            return result;
+        } catch (error) {
+            return { code: 400, data: 'No se encontro  el usuario' };
         }
     }
 }
