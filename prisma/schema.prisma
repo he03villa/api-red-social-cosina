@@ -13,35 +13,75 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Usuario {
+model Usuarios {
   id Int @id @default(autoincrement())
   password String @db.LongText
   username String? @db.LongText
-  nombre String? @db.LongText
-  telefono String? @db.LongText
-  link_google String? @db.LongText
-  link_facebook String? @db.LongText
-  brithday DateTime?
-  pais String? @db.LongText
-  region String? @db.LongText
-  control_notificacion Boolean? @default(false)
   email String @unique
-  uidPlayFabId String @db.LongText
-  mythar Float? @default(0)
-  verificar Int? @default(0)
-  token_verificacion String? @db.LongText
-  referido String? @db.LongText
-  preguntaSecreta String @db.LongText
-  respuestaSecreta String @db.LongText
-  dobleFactor Boolean? @default(false)
-  privacidad Boolean? @default(false)
+  nombre String? @db.LongText
+  telefono String?
+  foto String? @db.LongText
   created_at DateTime @default(now())
-  nivel Float? @default(1)
-  poder_minado Int? @default(0)
-  gemas Float? @default(0)
-  gemas_cambio Float? @default(0)
-  gemas_regalo Float? @default(0)
-  numero_apuesta Int? @default(0)
-  codigo_registro String? @db.LongText
-  @@map("usuario")
+  publicaciones Publicaciones[]
+  comentarios Comentarios[]
+  respuestas Respuestas[]
+  amigos Amigos[] @relation("Amigos")
+  seguidores Amigos[] @relation("Usuarios")
+  notificaciones Notificaciones[]
+  @@map("usuarios")
+}
+
+model Publicaciones {
+  id Int @id @default(autoincrement())
+  texto String
+  imagen String?
+  usuarios_id Int
+  tipo Int
+  created_at DateTime @default(now())
+  usuarios Usuarios @relation(fields: [usuarios_id], references: [id])
+  comentarios Comentarios[]
+  @@map("publicaciones")
+}
+
+model Comentarios {
+  id Int @id @default(autoincrement())
+  texto String
+  publicaciones_id Int
+  usuarios_id Int
+  created_at DateTime @default(now())
+  publicaciones Publicaciones @relation(fields: [publicaciones_id], references: [id])
+  usuarios Usuarios @relation(fields: [usuarios_id], references: [id])
+  respuestas Respuestas[]
+  @@map("comentarios")
+}
+
+model Respuestas {
+  id Int @id @default(autoincrement())
+  texto String
+  comentarios_id Int
+  usuarios_id Int
+  created_at DateTime @default(now())
+  comentarios Comentarios @relation(fields: [comentarios_id], references: [id])
+  usuarios Usuarios @relation(fields: [usuarios_id], references: [id])
+  @@map("respuestas")
+}
+
+model Amigos {
+  id Int @id @default(autoincrement())
+  usuarios_id Int
+  amigos_id Int
+  created_at DateTime @default(now())
+  estado Int
+  usuarios Usuarios @relation("Usuarios", fields: [usuarios_id], references: [id])
+  amigos Usuarios @relation("Amigos", fields: [amigos_id], references: [id])
+  @@map("amigos")
+}
+
+model Notificaciones {
+  id Int @id @default(autoincrement())
+  usuarios_id Int
+  texto String
+  created_at DateTime @default(now())
+  usuarios Usuarios @relation(fields: [usuarios_id], references: [id])
+  @@map("notificaciones")
 }
