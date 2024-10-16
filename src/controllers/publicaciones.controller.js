@@ -17,8 +17,8 @@ class PublicacionesController {
     createPublicacion = async (req, res) => {
         try {
             const user = req.user;
-            const { text } = req.body;
-            const data = { texto: text, usuarios_id: user.id, tipo: 1 };
+            const { text, fotos } = req.body;
+            const data = { texto: text, usuarios_id: user.id, tipo: 1, fotos };
             const publicacion = await publicacionesService.createPublicacion(data);
             if (publicacion.code == 201) {
                 return res.status(publicacion.code).send(publicacion.data);

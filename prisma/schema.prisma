@@ -40,7 +40,19 @@ model Publicaciones {
   created_at DateTime @default(now())
   usuarios Usuarios @relation(fields: [usuarios_id], references: [id])
   comentarios Comentarios[]
+  fotos Fotos[]
   @@map("publicaciones")
+}
+
+model Fotos {
+  id Int @id @default(autoincrement())
+  url String @db.LongText
+  public_id String @db.LongText
+  format String @db.LongText
+  resource_type String @db.LongText
+  publicaciones_id Int
+  publicaciones Publicaciones @relation(fields: [publicaciones_id], references: [id])
+  @@map("fotos")
 }
 
 model Comentarios {

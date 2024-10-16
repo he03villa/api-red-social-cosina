@@ -2,8 +2,8 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 class GemineService {
 
-    apiKey = 'AIzaSyAnndwUkgk9am6VfnKTzUbe_3_tvPbB64g';
-    /* apiKey = process.env.GEMINI_API_KEY; */
+    /* apiKey = 'AIzaSyAnndwUkgk9am6VfnKTzUbe_3_tvPbB64g'; */
+    apiKey = process.env.GEMINI_API_KEY;
     genAI;
     model;
     chatSession;
