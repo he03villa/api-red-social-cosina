@@ -17,7 +17,7 @@ class PublicacionesService extends Base {
                 data
             });
             for (let x = 0; x < fotos.length; x++) {
-                const element = array[x];
+                const element = fotos[x];
                 const url = `${new Date().getTime()}`;
                 const resul = await uploadImage(element, url);
                 const dataImagen = {

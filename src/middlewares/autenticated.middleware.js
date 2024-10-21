@@ -5,7 +5,7 @@ const secret = 'examen_app';
 export const ensureAuth = (req, res, next) => {
     const xToken = req.get('x-Authorization');
     let autho = req.get('Authorization');
-    if (xToken || xToken != '') {
+    if (xToken && xToken != '') {
         autho = xToken;
     }
     if (!autho) {

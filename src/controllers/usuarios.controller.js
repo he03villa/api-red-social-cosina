@@ -61,7 +61,7 @@ class UsuariosController {
     updateUser = async (req, res) => {
         const { id } = req.params;
         const { nombre, telefono } = req.body;
-        const data = { nombre, telefono, id }
+        const data = { nombre, telefono: telefono.toString(), id }
         try {
             const user = await userService.updateUser(data);
             if (user.code == 200) {

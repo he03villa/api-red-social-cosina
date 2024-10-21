@@ -70,6 +70,7 @@ class UsuariosService extends Base {
             });
             return { code: 200, data: { message: "Se actualizo el usuario" } };
         } catch (error) {
+            console.log(error);
             return { code: 400, data: 'No se encontro  el usuario' };
         }
     }

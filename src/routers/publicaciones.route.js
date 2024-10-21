@@ -57,8 +57,7 @@ const publicacionesValidator = new PublicacionesValidator();
  *        description: Server Error
  */
 publicacionesRouter.post(
-    "/create", 
-    publicacionesValidator.savePublicacion,
+    "/create",
     ensureAuth,
     validaRequest,
     publicacionesController.createPublicacion
