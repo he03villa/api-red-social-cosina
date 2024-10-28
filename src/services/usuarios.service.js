@@ -102,6 +102,29 @@ class UsuariosService extends Base {
             return { code: 400, data: 'No se encontro  el usuario' };
         }
     }
+
+    searchUser = async (option) => {
+        try {
+            const OR = [                
+                { email: { contains: option } },
+                { username: { contains: option } },
+                { nombre: { contains: option } },
+                { telefono: { contains: option } }
+            ];
+            const user = await this.prisma.usuarios.findMany({
+                where: { OR },
+                select: {
+                    username: true,
+                    nombre: true,
+                    foto: true,
+                },
+                take: 10,
+            });
+            return { code: 200, data: user};
+        } catch (error) {
+            return { code: 400, data: error.message };
+        }
+    }
 }
 
 export default UsuariosService;

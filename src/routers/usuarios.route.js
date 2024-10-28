@@ -243,4 +243,58 @@ usuariosRouter.put(
     usuariosController.updatePassword
 );
 
+/**
+ * @swagger
+ * /api/usuarios/buscar-usuarios:
+ *  get:
+ *    security:
+ *       - bearerAuth: []
+ *    description: Buscar user
+ *    tags:
+ *      - Usuarios
+ *    parameters:
+ *      - in: header
+ *        name: x-Authorization
+ *        type: string
+ *        description: Token de autorizacion
+ *        required: true
+ *      - in: query
+ *        name: search
+ *        type: string
+ *        description: buscador
+ *    responses:
+ *     200:
+ *      description: buscar success
+ *      examples:
+ *        application/json: {
+ *          "id": 1,
+ *          "nombre": "juan",
+ *          "numero_cedula": "12334345",
+ *          "email": "prueba@prueba.com",
+ *          "tipo_idenficacion": "CC",
+ *          "createdAt": "2024-09-21T02:11:11.000Z",
+ *          "updatedAt": "2024-09-21T02:11:11.000Z"
+ *        }
+ *     400:
+ *       description: bad request
+ *       schema:
+ *          type: object
+ *          properties:
+ *            errors:
+ *              type: object
+ *       examples:
+ *          application/json: {
+ *            "errors": [
+ *                 "message": "Incorrect password"
+ *             ],
+ *          }
+ *
+ */
+usuariosRouter.get(
+    "/buscar-usuarios", 
+    ensureAuth,
+    validaRequest, 
+    usuariosController.searchUser
+);
+
 export default usuariosRouter;

@@ -31,6 +31,10 @@ class UsuariosValidator {
         body("password").notEmpty().withMessage("El password es requerido")
     ];
 
+    search = [
+        body("search").notEmpty().withMessage("El search es requerido")
+    ];
+
     existeUser = async (req, res, next) => {
         const { email } = req.body;
         const user = await userService.getUser(email);

@@ -91,5 +91,20 @@ class UsuariosController {
             return res.status(500).send({ message: 'Error Interno' });
         }
     }
+
+    searchUser = async (req, res) => {
+        const search = req.query.search || '';
+        try {
+            const user = await userService.searchUser(search);
+            if (user.code == 200) {
+                return res.status(200).send(user.data);
+            } else {
+                serializeErrors(res, user.code, user.data);
+            }
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send({ message: 'Error Interno' });
+        }
+    }
 }
 export default UsuariosController;
